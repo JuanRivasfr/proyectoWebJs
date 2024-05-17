@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "server" : "json-server src/js/db/productos.json 5510"
+    "server": "json-server src/js/db/productos.json 5510"
   },
   "dependencies": {
     "async": "^3.2.5",
