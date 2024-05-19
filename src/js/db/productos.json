@@ -52,7 +52,7 @@
         },
         {
             "id": "camiseta-01",
-            "titulo": "Camiseta 01",
+            "titulo": "CAMISETA BOX NSE TEE MANGA",
             "imagen": "https://thenorthfaceco.vteximg.com.br/arquivos/ids/220813-900-900/NF0A812HKY4_1.jpg?v=638375053745000000",
             "categoria": {
                 "nombre": "Camisetas",
@@ -62,7 +62,7 @@
         },
         {
             "id": "camiseta-02",
-            "titulo": "Camiseta 02",
+            "titulo": "CAMISETA BOX NSE TEE MANGA",
             "imagen": "https://thenorthfaceco.vteximg.com.br/arquivos/ids/220797-900-900/NF0A812HMPF_1.jpg?v=638375053592900000",
             "categoria": {
                 "nombre": "Camisetas",
@@ -72,7 +72,7 @@
         },
         {
             "id": "camiseta-03",
-            "titulo": "Camiseta 03",
+            "titulo": "CAMISETA S/S HALF DOME TRI-BLEND TEE",
             "imagen": "https://thenorthfaceco.vteximg.com.br/arquivos/ids/224634-900-900/NF0A5J2IN89_1.jpg?v=638446417370730000",
             "categoria": {
                 "nombre": "Camisetas",
@@ -82,8 +82,8 @@
         },
         {
             "id": "camiseta-04",
-            "titulo": "Camiseta 04",
-            "imagen": "https://thenorthfaceco.vteximg.com.br/arquivos/ids/218733-100-116/NF0A812PN9S_1.jpg?v=638356820622700000",
+            "titulo": "CAMISETA WANDER S/S",
+            "imagen": "https://thenorthfaceco.vteximg.com.br/arquivos/ids/220944-900-900/NF0A7WUUN38_1.jpg?v=638375054955630000",
             "categoria": {
                 "nombre": "Camisetas",
                 "id": "Camisetas"
@@ -92,7 +92,7 @@
         },
         {
             "id": "camiseta-05",
-            "titulo": "Camiseta 05",
+            "titulo": "CAMISETA S/S HALF DOME TEE",
             "imagen": "https://thenorthfaceco.vteximg.com.br/arquivos/ids/218405-900-900/NF0A812MLV4_1.jpg?v=638356817683630000",
             "categoria": {
                 "nombre": "Camisetas",
@@ -102,7 +102,7 @@
         },
         {
             "id": "camiseta-06",
-            "titulo": "Camiseta 06",
+            "titulo": "CAMISETA S/S HALF DOME TEE",
             "imagen": "https://thenorthfaceco.vteximg.com.br/arquivos/ids/218385-900-900/NF0A812MHOV_1.jpg?v=638356817528700000",
             "categoria": {
                 "nombre": "Camisetas",
@@ -112,7 +112,7 @@
         },
         {
             "id": "camiseta-07",
-            "titulo": "Camiseta 07",
+            "titulo": "CAMISETA S/S COORDINATES TEE",
             "imagen": "https://thenorthfaceco.vteximg.com.br/arquivos/ids/218684-900-900/NF0A7UOHLA9_1.jpg?v=638356820210630000",
             "categoria": {
                 "nombre": "Camisetas",
@@ -122,7 +122,7 @@
         },
         {
             "id": "camiseta-08",
-            "titulo": "Camiseta 08",
+            "titulo": "CAMISETA WANDER S/S",
             "imagen": "https://thenorthfaceco.vteximg.com.br/arquivos/ids/217227-900-900/NF0A7WUUFN4_1.jpg?v=638344570017330000",
             "categoria": {
                 "nombre": "Camisetas",
@@ -132,7 +132,7 @@
         },
         {
             "id": "pantalon-01",
-            "titulo": "Pantalón 01",
+            "titulo": "PANTALONES PARAMOUNT ACTIVE",
             "imagen": "https://thenorthfaceco.vteximg.com.br/arquivos/ids/204138-900-900/NF0A3SO9GNK_1.jpg?v=637948974221000000",
             "categoria": {
                 "nombre": "Pantalones",
@@ -142,7 +142,7 @@
         },
         {
             "id": "pantalon-02",
-            "titulo": "Pantalón 02",
+            "titulo": "PANTALÓN ANTORA RAIN PANT",
             "imagen": "https://thenorthfaceco.vteximg.com.br/arquivos/ids/221027-900-900/NF0A7UKPJK3_1.jpg?v=638375055769400000",
             "categoria": {
                 "nombre": "Pantalones",
@@ -152,7 +152,7 @@
         },
         {
             "id": "pantalon-03",
-            "titulo": "Pantalón 03",
+            "titulo": "PANTALÓN ALPINE POLARTEC 100",
             "imagen": "https://thenorthfaceco.vteximg.com.br/arquivos/ids/220730-900-900/NF0A84HPDYY_1.jpg?v=638375052909100000",
             "categoria": {
                 "nombre": "Pantalones",
@@ -162,7 +162,7 @@
         },
         {
             "id": "pantalon-04",
-            "titulo": "Pantalón 04",
+            "titulo": "PANTALÓN PARAMOUNT BEIGE",
             "imagen": "https://thenorthfaceco.vteximg.com.br/arquivos/ids/222470-900-900/NF0A7WZELK5_1.jpg?v=638382754759300000",
             "categoria": {
                 "nombre": "Pantalones",
@@ -172,7 +172,7 @@
         },
         {
             "id": "pantalon-05",
-            "titulo": "Pantalón 05",
+            "titulo": "PANTALÓN PARAMOUNT CONVERTIBLE",
             "imagen": "https://thenorthfaceco.vteximg.com.br/arquivos/ids/218356-900-900/NF0A7WZDLK5_1.jpg?v=638356817275530000",
             "categoria": {
                 "nombre": "Pantalones",

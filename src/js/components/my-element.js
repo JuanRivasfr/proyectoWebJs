@@ -1,5 +1,6 @@
 import { LitElement, html, css } from "lit";
 import { getProducts } from "./getData.js";
+import { forEach } from "async";
 
 class MyElement extends LitElement {
 
@@ -100,6 +101,7 @@ class MyElement extends LitElement {
             flex-wrap: wrap;
             justify-content: flex-start;
             overflow-y: scroll;
+            align-content: flex-start;
         }
     
         & .der__cont__cont{
@@ -141,11 +143,61 @@ class MyElement extends LitElement {
                 border-radius: 8px;
             }
         }
+        
+        }
+    }
+
+    .car__cont {
+        display: flex;
+        width: 100%;
+        height: fit-content;
+        flex-wrap: wrap;
+
+        & .car__cont__cont {
+            background-color: var(--color-aux);
+            margin: 1vw .5vw;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid var(--color-primary);
+            height: fit-content;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 100%;
+            font-size: 1.5vw;
+            color: var(--color-primary);
+    
+            & img {
+                width: 80px;
+                min-width: 200px;
+                height: 200px;
+            }
+    
+            & p {
+                margin: 1vw 0;
+            }
+    
+            & .car__cont__cont__cantidad p:nth-child(2) {
+                border: 1px solid var(--color-primary);
+                padding: .2vw;
+            }
+    
+            & a i {
+                font-size: 3vw;
+                color: var(--color-primary);
+            }
+    
+            & .car__cont__cont__cantidad{
+                width: 10%;
+            }
+    
+            & .car__cont__cont__nombre{
+                width: 15%;
+            }
     
         }
     
-    
-    
+
     }
     `;
 
@@ -195,7 +247,9 @@ class MyElement extends LitElement {
                     <li><a href="#" @click=${
                         () => this.changeSection('Pantalones')
                     }><i class='bx bx-closet'></i>Pantalones</a></li>
-                    <li><a href="#"><i class='bx bx-cart'></i>Carrito <span>3</span></a></li>
+                    <li><a href="#" @click=${
+                        () => this.changeSection('Carrito')
+                    }><i class='bx bx-cart'></i>Carrito <span>${this.contCart()}</span></a></li>
                 </ul>
             </nav>
             <footer>
@@ -219,26 +273,99 @@ class MyElement extends LitElement {
     }
 
     chargeContent(){
-        const listaProductos = this.products.filter(val => 
-            this.section === 'Todos los productos' || val.categoria.id === this.section
-            );
+
+        if (this.section !== 'Carrito') {
             
-        return html`
-            ${listaProductos.map(valproduct => html`
-            <div class="der__cont__cont">
-                <div class="der__contimg">
-                    <img src="${valproduct.imagen}" alt="">
-                </div>
-                <div class="der__inf">
-                    <p>${valproduct.titulo}</p>
-                    <div class="inf__precios">
-                        <p>${valproduct.precio}</p>
-                        <button id="${valproduct.id}">Agregar</button>
+            const listaProductos = this.products.filter(val => 
+                this.section === 'Todos los productos' || val.categoria.id === this.section
+                );
+                
+            return html`
+                ${listaProductos.map(valproduct => html`
+                <div class="der__cont__cont">
+                    <div class="der__contimg">
+                        <img src="${valproduct.imagen}" alt="">
                     </div>
+                    <div class="der__inf">
+                        <p>${valproduct.titulo}</p>
+                        <div class="inf__precios">
+                            <p>$${valproduct.precio}</p>
+                            <button id="${valproduct.id}" @click=${
+                                () => this.addCart(valproduct, valproduct.id, valproduct.precio)
+                            }>Agregar</button>
+                        </div>
+                    </div>
+                </div>
+                `)}
+            `
+        }
+        else {
+            
+            let data = JSON.parse(localStorage.getItem('cart')) || []
+            
+            return html`
+            ${data.map(carProduct => html`
+            <div class="car__cont">
+                <div class="car__cont__cont">
+                    <div class="car__contimg">
+                        <img src="${carProduct.imagen}" alt="">
+                    </div>
+                    <div class="car__cont__cont__nombre">
+                        <p>Nombre</p>
+                        <p>${carProduct.titulo}</p>
+                    </div>
+                    <div class="car__cont__cont__cantidad">
+                        <p>Cantidad</p>
+                        <p>${carProduct.cantidad}</p>
+                    </div>
+                    <div class="car__cont__cont__precio">
+                        <p>Precio</p>
+                        <p>$${carProduct.precio}</p>
+                    </div>
+                    <div class="car__cont__cont__subtotal">
+                        <p>Subtotal</p>
+                        <p>$${carProduct.subtotal}</p>
+                    </div>
+                    <a href="#" @click=${
+                        () => this.deleteCar(carProduct.id)
+                    }><i class='bx bx-trash'></i></a>
                 </div>
             </div>
             `)}
-        `
+            `
+        }
+
+        
+    }
+
+    deleteCar(id){
+        let data = JSON.parse(localStorage.getItem('cart')) || [];
+        data = data.filter(productId => productId.id !== id);
+        localStorage.setItem('cart', JSON.stringify(data))
+        this.requestUpdate();
+        console.log(id)
+    }
+
+    addCart(producto, idproducto, precio){
+        let data = JSON.parse(localStorage.getItem('cart')) || [];
+        let productoExistente = data.find(val => val.id === idproducto);
+        if (productoExistente){
+            productoExistente.cantidad++
+            productoExistente.subtotal += precio
+        }
+        else{
+            producto.cantidad = 1;
+            producto.subtotal = producto.precio;
+            data.push(producto)
+        }
+        localStorage.setItem('cart', JSON.stringify(data));
+        this.requestUpdate();
+        console.log(data)
+    }
+
+    contCart(){
+        let data = JSON.parse(localStorage.getItem('cart')) || [];
+        return data.length;
     }
 
 }
