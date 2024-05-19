@@ -1,3 +1,5 @@
+//Se recuperan los datos del JSON
+
 export async function getProducts(){
     try {
         const response = await fetch("http://localhost:3000/productos");

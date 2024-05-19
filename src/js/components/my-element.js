@@ -4,6 +4,7 @@ import { forEach } from "async";
 
 class MyElement extends LitElement {
 
+    //Hoja de estilos para el elemento
     static styles = css`
     
     section{
@@ -201,10 +202,14 @@ class MyElement extends LitElement {
     }
     `;
 
+    //Se establece el tipo de variables reactivas
+
     static properties = {
         section: { type: String},
         products: {type : Array}
     };
+
+    //Constructor
 
     constructor(){
         super();
@@ -212,10 +217,14 @@ class MyElement extends LitElement {
         this.products = []
     }
 
+    //Se recuperan los datos mediante una callback
+
     async connectedCallback(){
         super.connectedCallback();
         await this.obtenerDataProductos();
     }
+
+    //Funcion a la que se llama para recuperar los datos y verificar que se esten recuperando correctamente
 
     async obtenerDataProductos(){
         try {
@@ -224,6 +233,8 @@ class MyElement extends LitElement {
             console.error('Error al obtener los productos:', error)
         }
     }
+
+    //Se renderiza la pagina web inicial
 
     render(){
         return html`
@@ -268,9 +279,13 @@ class MyElement extends LitElement {
         `
     }
 
+    //Funcion llamada para cambiar el valor de section y asi cambiar los productos que se muestran
+
     changeSection(section) {
         this.section = section;
     }
+
+    //Carga los productos que quieren ser mostrados
 
     chargeContent(){
 
@@ -338,6 +353,8 @@ class MyElement extends LitElement {
         
     }
 
+    //Funcion para eliminar productos 
+
     deleteCar(id){
         let data = JSON.parse(localStorage.getItem('cart')) || [];
         data = data.filter(productId => productId.id !== id);
@@ -345,6 +362,8 @@ class MyElement extends LitElement {
         this.requestUpdate();
         console.log(id)
     }
+
+    //Funcion para añadir productos
 
     addCart(producto, idproducto, precio){
         let data = JSON.parse(localStorage.getItem('cart')) || [];
@@ -362,6 +381,8 @@ class MyElement extends LitElement {
         this.requestUpdate();
         console.log(data)
     }
+
+    //El contador de los productos del carro
 
     contCart(){
         let data = JSON.parse(localStorage.getItem('cart')) || [];
