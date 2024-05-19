@@ -371,3 +371,4 @@ class MyElement extends LitElement {
 }
 
 customElements.define('my-element', MyElement);
+export {MyElement}
