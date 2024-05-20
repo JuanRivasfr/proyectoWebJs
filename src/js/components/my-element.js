@@ -4,9 +4,33 @@ import { forEach } from "async";
 
 class MyElement extends LitElement {
 
+    //Se establece el tipo de variables reactivas
+
+    static properties = {
+        section: { type: String},
+        products: {type : Array},
+        ventana: {type: Boolean}
+    };
+
+    //Constructor
+
+    constructor(){
+        super();
+        this.section= 'Todos los productos';
+        this.products = [];
+        this.ventana = true;
+    }
+
+    //Se recuperan los datos mediante una callback
+
+    async connectedCallback(){
+        super.connectedCallback();
+        await this.obtenerDataProductos();
+    }
+
     //Hoja de estilos para el elemento
     static styles = css`
-    
+
     section{
         width: 100vw;
         height: 100vh;
@@ -14,7 +38,7 @@ class MyElement extends LitElement {
     }
 
     .izq{
-        height: 100vh;
+        height: 100%;
         width: 20%;
         display: flex;
         flex-direction: column;
@@ -77,12 +101,12 @@ class MyElement extends LitElement {
     
     .der{
         width: 80%;
-        height: 100vh;
+        height: 80%;
         padding: 3vw;
     
     
         & .der__cont{
-            width: 100%;
+            width: 85%;
             height: 100%;
             background: var(--color-secundary);
             border-radius: 40px;
@@ -129,6 +153,10 @@ class MyElement extends LitElement {
             padding: .5vw;
             color: var(--color-terciary);
             font-size: .8vw;
+
+            & p{
+                text-wrap: balance;
+            }
         }
     
         & .inf__precios{
@@ -165,7 +193,7 @@ class MyElement extends LitElement {
             justify-content: space-around;
             align-items: center;
             width: 100%;
-            font-size: 1.5vw;
+            font-size: 1vw;
             color: var(--color-primary);
     
             & img {
@@ -184,7 +212,7 @@ class MyElement extends LitElement {
             }
     
             & a i {
-                font-size: 3vw;
+                font-size: 1.5vw;
                 color: var(--color-primary);
             }
     
@@ -200,29 +228,78 @@ class MyElement extends LitElement {
     
 
     }
+
+    #pcarvacio{
+        color: var(--color-terciary);
+        font-size: 1vw;
+    }
+
+    .cont__buttons__cart{
+        display: flex;
+        width: 100%;
+        margin: 1vw .5vw;
+        justify-content: space-between;
+        align-items: center;
+
+        & .buttons__cart__any{
+            background-color: var(--color-aux);
+            color: var(--color-primary);
+            width: 15%;
+            height: fit-content;
+            border-radius: 5px;
+            font-size: 1vw;
+            border: 0;
+            padding: 5px;
+            border: 1px solid var(--color-primary);
+        }
+
+        & .buttons__cart__buy{
+            display: flex;
+            border: 1px solid var(--color-primary);
+            color: var(--color-aux);
+            border-radius: 5px;
+            overflow: hidden;
+            font-size: 1vw;
+            align-items: center;
+            height: fit-content;
+
+            & p{
+                margin: 0;
+                margin-right: 5px;
+                margin-left: 5px;
+                font-size: 1vw;
+                
+            }
+
+            & button{
+                background-color: var(--color-aux);
+                color: var(--color-primary);
+                height: fit-content;
+                border: 0;
+                font-size: 1vw;
+                padding: 5px;
+                border: 0;
+            }
+            
+        }
+    }
+
+    button:hover{
+        cursor: pointer;
+    }
+
+    .ventana{
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+    }
+
+    :host([ventana]) .ventana{
+        display: none;
+    }
+
     `;
-
-    //Se establece el tipo de variables reactivas
-
-    static properties = {
-        section: { type: String},
-        products: {type : Array}
-    };
-
-    //Constructor
-
-    constructor(){
-        super();
-        this.section= 'Todos los productos';
-        this.products = []
-    }
-
-    //Se recuperan los datos mediante una callback
-
-    async connectedCallback(){
-        super.connectedCallback();
-        await this.obtenerDataProductos();
-    }
 
     //Funcion a la que se llama para recuperar los datos y verificar que se esten recuperando correctamente
 
@@ -276,6 +353,9 @@ class MyElement extends LitElement {
             </div>
         </aside>
         </section>
+        <div  class="ventana">
+            <p>Hola<p>
+        </div>
         `
     }
 
@@ -317,40 +397,78 @@ class MyElement extends LitElement {
         else {
             
             let data = JSON.parse(localStorage.getItem('cart')) || []
-            
-            return html`
-            ${data.map(carProduct => html`
-            <div class="car__cont">
-                <div class="car__cont__cont">
-                    <div class="car__contimg">
-                        <img src="${carProduct.imagen}" alt="">
+
+            if (data.length === 0){
+                return html`
+                    <p id="pcarvacio">Tu carrito esta vacio :c</p>
+                `
+            }
+            else{
+                let cont = 0
+                data.forEach(val =>{
+                    cont = cont + val.subtotal
+                })
+                return html`
+                ${data.map(carProduct => html`
+                <div class="car__cont">
+                    <div class="car__cont__cont">
+                        <div class="car__contimg">
+                            <img src="${carProduct.imagen}" alt="">
+                        </div>
+                        <div class="car__cont__cont__nombre">
+                            <p>Nombre</p>
+                            <p>${carProduct.titulo}</p>
+                        </div>
+                        <div class="car__cont__cont__cantidad">
+                            <p>Cantidad</p>
+                            <p>${carProduct.cantidad}</p>
+                        </div>
+                        <div class="car__cont__cont__precio">
+                            <p>Precio</p>
+                            <p>$${carProduct.precio}</p>
+                        </div>
+                        <div class="car__cont__cont__subtotal">
+                            <p>Subtotal</p>
+                            <p>$${carProduct.subtotal}</p>
+                        </div>
+                        <a href="#" @click=${
+                            () => this.deleteCar(carProduct.id)
+                        }><i class='bx bx-trash'></i></a>
                     </div>
-                    <div class="car__cont__cont__nombre">
-                        <p>Nombre</p>
-                        <p>${carProduct.titulo}</p>
-                    </div>
-                    <div class="car__cont__cont__cantidad">
-                        <p>Cantidad</p>
-                        <p>${carProduct.cantidad}</p>
-                    </div>
-                    <div class="car__cont__cont__precio">
-                        <p>Precio</p>
-                        <p>$${carProduct.precio}</p>
-                    </div>
-                    <div class="car__cont__cont__subtotal">
-                        <p>Subtotal</p>
-                        <p>$${carProduct.subtotal}</p>
-                    </div>
-                    <a href="#" @click=${
-                        () => this.deleteCar(carProduct.id)
-                    }><i class='bx bx-trash'></i></a>
                 </div>
-            </div>
-            `)}
+                `)}
+                <!---- Vaciar total y comprar ahora ----->
+                <div class="cont__buttons__cart"> 
+                    <button class="buttons__cart__any" @click=${
+                        () => this.clearCart()
+                    }>Vaciar Carrito</button>
+                    <div class="buttons__cart__buy">
+                        <p>Total: ${cont} </p>
+                        <button class="cart__buy__button" @click=${
+                            () => this.changeVentana(true)
+                        }> Comprar ahora </button>
+                    </div>
+                </div>
+                
             `
+            }
+            
+            
         }
 
         
+    }
+
+    changeVentana(cond){
+        this.ventana = cond
+        this.requestUpdate()
+    }
+
+    //Funcion para vaciar el carrito
+
+    clearCart(){
+        localStorage.clear();
+        this.requestUpdate();
     }
 
     //Funcion para eliminar productos 
