@@ -287,18 +287,6 @@ class MyElement extends LitElement {
     button:hover{
         cursor: pointer;
     }
-
-    .ventana{
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-    }
-
-    :host([ventana]) .ventana{
-        display: none;
-    }
-
     `;
 
     //Funcion a la que se llama para recuperar los datos y verificar que se esten recuperando correctamente
@@ -316,6 +304,7 @@ class MyElement extends LitElement {
     render(){
         return html`
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <script src="sweetalert2.all.min.js"></script>
         <section class="cont__body">
         <aside class="izq">
             <header class="izq__campus">
@@ -353,9 +342,6 @@ class MyElement extends LitElement {
             </div>
         </aside>
         </section>
-        <div  class="ventana">
-            <p>Hola<p>
-        </div>
         `
     }
 
@@ -445,7 +431,7 @@ class MyElement extends LitElement {
                     <div class="buttons__cart__buy">
                         <p>Total: ${cont} </p>
                         <button class="cart__buy__button" @click=${
-                            () => this.changeVentana(true)
+                            () => this.compra()
                         }> Comprar ahora </button>
                     </div>
                 </div>
@@ -457,11 +443,6 @@ class MyElement extends LitElement {
         }
 
         
-    }
-
-    changeVentana(cond){
-        this.ventana = cond
-        this.requestUpdate()
     }
 
     //Funcion para vaciar el carrito
@@ -497,7 +478,8 @@ class MyElement extends LitElement {
         }
         localStorage.setItem('cart', JSON.stringify(data));
         this.requestUpdate();
-        console.log(data)
+        console.log(data);
+        this.alarm();
     }
 
     //El contador de los productos del carro
@@ -505,6 +487,46 @@ class MyElement extends LitElement {
     contCart(){
         let data = JSON.parse(localStorage.getItem('cart')) || [];
         return data.length;
+    }
+
+    //Funcion para la alarma al momento de agregar producto
+
+    alarm(){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          Toast.fire({
+            icon: "success",
+            title: "Producto agregado"
+          });
+    }
+
+    //Alarma compra 
+
+    compra(){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          Toast.fire({
+            icon: "success",
+            title: "Compra exitosa"
+          });
     }
 
 }
